@@ -28,3 +28,12 @@ category_keyboard.adjust(2)
 # клава с одной кнопкой для описания
 description_keyboard = InlineKeyboardBuilder()
 description_keyboard.button(text='пропустить', callback_data='skip')
+
+
+
+# Клавиатура для выбора временных промежутков трат
+time_period_keyboard = InlineKeyboardBuilder()
+time_period_keyboard.button(text='Текущий месяц', callback_data='this_month')
+time_period_keyboard.button(text='Год', callback_data='year')
+time_period_keyboard.button(text='Произвольный интервал', callback_data='interval')
+time_period_keyboard.adjust(2)
