@@ -2,7 +2,7 @@ import asyncio
 from aiogram import Bot, Dispatcher
 from config import TOKEN
 from app.handlers import router
-from app.db import init_expense_db, init_earnings_db
+from app.db import init_expense_db, init_earnings_db, drop_table
 from aiogram.types import BotCommand
 import logging
 
@@ -20,6 +20,7 @@ async def set_bot_commands():
     await bot.set_my_commands(bot_commands)
 
 async def main():
+    #drop_table()
     init_expense_db()
     init_earnings_db()
     dp.include_router(router)

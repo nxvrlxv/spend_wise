@@ -37,3 +37,9 @@ time_period_keyboard.button(text='Текущий месяц', callback_data='thi
 time_period_keyboard.button(text='Год', callback_data='year')
 time_period_keyboard.button(text='Произвольный интервал', callback_data='interval')
 time_period_keyboard.adjust(2)
+
+
+
+# кнопка добавления накопления
+earn_keyboard = InlineKeyboardBuilder()
+earn_keyboard.button(text='Добавить', callback_data='add_earning')
