@@ -1,5 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup ,InlineKeyboardButton
 from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
+from app.db import show_earns, show_earnings_details
 
 
 main_keyboard = InlineKeyboardBuilder()
@@ -43,3 +44,27 @@ time_period_keyboard.adjust(2)
 # кнопка добавления накопления
 earn_keyboard = InlineKeyboardBuilder()
 earn_keyboard.button(text='Добавить', callback_data='add_earning')
+
+
+
+def goals_keyboard(user_id: int):
+    goals = show_earns(user_id)
+    gl_kb = InlineKeyboardBuilder()
+
+    for goal in goals:
+        gl_kb.button(text=f'{goal[1]}', callback_data=f'goal_{goal[0]}')
+
+    gl_kb.adjust(1)
+    gl_kb.row(InlineKeyboardButton(
+        text="➕ Новая цель",
+        callback_data="add_earning"
+    ))
+
+    return gl_kb.as_markup()
+
+
+
+goal_detail_keyboard = InlineKeyboardBuilder()
+goal_detail_keyboard.button(text="Вложить", callback_data= 'add_money')
+goal_detail_keyboard.button(text="◀️ Назад", callback_data="back_to_goals")
+goal_detail_keyboard.adjust(1)

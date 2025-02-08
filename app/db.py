@@ -79,14 +79,55 @@ def show_expenses_this_year(user_id: int):
     return all_expenses
 
 
-def show_earnings(user_id: int):
+
+
+def add_earns(user_id: int, description: str, target_money: int):
     conn = sqlite3.connect('earnings.db')
     cursor = conn.cursor()
 
-    cursor.execute('''SELECT * FROM earnings WHERE ''')
 
-    earnings = cursor.fetchall()
+    cursor.execute('''INSERT INTO earnings (user_id, description, target_money)
+    VALUES (?, ?, ?)''', (user_id, description, target_money))
+
+    conn.commit()
+    conn.close()
+
+
+def show_earns(user_id: int):
+    conn = sqlite3.connect('earnings.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''SELECT id, description FROM earnings WHERE user_id = ?''', (user_id,))
+
+    user_earns = cursor.fetchall()
+    conn.commit()
+    conn.close()
+    return user_earns
+
+
+def show_earnings_details(earn_id: int):
+    conn = sqlite3.connect('earnings.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''SELECT description, money_invested, target_money FROM earnings WHERE id = ? ''', (earn_id,))
+
+    earnings = cursor.fetchone()
+    conn.commit()
+    conn.close()
     return earnings
+
+
+def add_money_to_earn(earn_id: int, inv_mon: int):
+    conn = sqlite3.connect('earnings.db')
+    cursor = conn.cursor()
+
+
+    cursor.execute('''UPDATE earnings
+    SET money_invested = money_invested + ?
+    WHERE id = ?''', (inv_mon, earn_id))
+
+    conn.commit()
+    conn.close()
 
 
 
